@@ -1,18 +1,15 @@
-const header = document.querySelector('header');
 const wrapper = document.querySelector('.wrapper');
+const header = document.querySelector('header');
 const burger = document.querySelector ('.burger');
 const popUps = [ ...document.querySelectorAll ('.work > div div')];
 const footer = document.querySelector('footer');
 const modal = document.querySelector('.modal-wrap');
 const closeModal = document.querySelector('.modal .hide');
-
 const menu = document.querySelector ('aside');
 const goUp = document.querySelector('.return');
-
-
 const navLi = document.querySelectorAll('aside ul li');
-const sections = document.querySelectorAll('section');
-const windowHeight = window.innerHeight;
+const sections = [...document.querySelectorAll('section')];
+
 
 // podmiana zdjęć w galerii sposobem z kursu
 let activeElement = 0;
@@ -31,13 +28,9 @@ function changeElement() {
 setInterval(changeElement, timeChange)
 
 
-
 // burger
 burger.addEventListener("click", function(){
-    burger.classList.toggle("active")
-})
-
-burger.addEventListener("click", function(){
+    burger.classList.toggle("active");
     menu.classList.toggle("active")
 })
 
@@ -49,40 +42,23 @@ navLi.forEach((li) => {
 })
 
 
-
 // animacje podczas skrolowania
 document.addEventListener('scroll', function(){
+
     const scrollValue = window.scrollY;
-    // const aboutFromTop = about.offsetTop;
-    const qualityFromTop = quality.offsetTop;
-    const servicesFromTop = services.offsetTop;
-    const workFromTop = work.offsetTop;
-    // const contactFromTop = contact.offsetTop;
 
-    const headerHeight = header.offsetHeight;
-    const aboutHeight = about.offsetHeight;
-    const qualityHeight = quality.offsetHeight;
-    const servicesHeight = services.offsetHeight;
-    const workHeight = work.offsetHeight;
-    // const contactHeight = contact.offsetHeight;
-
-    if (scrollValue > headerHeight - headerHeight){
-        about.classList.add('active');
+    if (scrollValue > header.headerHeight - header.headerHeight/2){
+            about.classList.add('active');
     }
-    if (scrollValue > qualityFromTop - qualityHeight){
-        quality.classList.add('active');
+    for (let i = 0; i < sections.length; i++){
+        if (scrollValue > sections[i].offsetTop - sections[i].offsetHeight/2){
+            sections[i].classList.add('active')
+        }
     }
-    if (scrollValue > servicesFromTop - servicesHeight){
-        services.classList.add('active');
-    }
-    if (scrollValue > workFromTop - workHeight){
-        work.classList.add('active');
-    }
-    if (scrollValue > workFromTop){
+    // wykrycie kiedy strona zostala przewinieta do konca
+    if((window.innerHeight + window.scrollY) >= document.body.offsetHeight){
         contact.classList.add('active');
     }
-    
-
     if(scrollValue < 100){
         sections.forEach( section =>{
             section.classList.remove('active');
@@ -99,7 +75,6 @@ goUp.addEventListener('click', function (){
         behavior:"smooth"
     });
 })
-
 
 
 // pobranie zdjęć do galerii
